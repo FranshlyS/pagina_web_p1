@@ -1,0 +1,21 @@
+name: Notificar push a main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+
+      - name: Enviar notificación a ntfy.sh
+        run: |
+          curl -H "Title: Push en main por ${{ github.actor }}" \
+               -H "Priority: high" \
+               -d "El usuario ${{ github.actor }} ha subido código a la rama main del repositorio." \
+               https://ntfy.sh/devops-itla
